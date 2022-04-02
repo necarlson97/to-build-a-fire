@@ -1,0 +1,42 @@
+Soon:
+
+
+
+Later:
+snow metaballs
+placeholder cassette and player, functional
+blender cassette and player
+pushing down snow to free objects
+wind force
+Push to github
+Banner immages / screenshots
+Sounds:
+	- wind
+	- snow crunch
+	- few flame noises dependent on # of flames
+Snowflake particles
+
+
+Done:
+blender sticks, logs, flares, etc
+flame placeholder
+picking up objects
+Placeholder sticks, logs, flares, etc
+starting flames
+flames spreading
+Hand mouse controls
+Blender fingers / hands
+Github init
+
+
+Sounds:
+	- snow crunch
+	- stick against stick
+	- soft ouch, hard ouch
+	- soft flame
+	- loud flame
+	- burnt hands
+	- wind
+	- soft stick sound
+	- audiobook
+	- radio click
