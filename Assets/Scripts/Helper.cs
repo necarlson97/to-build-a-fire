@@ -64,6 +64,22 @@ public class Helper : MonoBehaviour {
         FindObjectOfType<Tips>().Tip(topic);
     }
 
+    public static TimeSpan Now() {
+        DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        return System.DateTime.UtcNow - epochStart;
+    }
+
+    public static TimeSpan RoundTime(TimeSpan? span) {
+        if (span == null) return new TimeSpan();
+        return TimeSpan.FromSeconds(Math.Round(((TimeSpan) span).TotalSeconds));
+    }
+
+    public static bool JustStarted() {
+        var st = FindObjectOfType<Menu>().startTime;
+        if (st == null) return true;
+        return (Helper.Now() - (TimeSpan) st).TotalSeconds < 3f;
+    }
+
 
     // Just for easy copying:
 

@@ -14,7 +14,7 @@ public class Flame : MonoBehaviour {
     public GameObject flamePrefab;
 
     internal static int maxFlames = 100;
-    internal float maxFlameSpread = .5f; // How far flames will want to spread to
+    internal float maxFlameSpread = 1f; // How far flames will want to spread to
     
     void Start() {
         if (life == 0) life = lifeMax;
@@ -24,7 +24,19 @@ public class Flame : MonoBehaviour {
 
     void FindFuel() {
         // Once we spawn in, look for a fuel to join to
-        var f = ClosestFuel();
+        var f = ClosestFuel(maxFlameSpread);
+
+        // TODO REMOVE
+        if (f == null) {
+            Debug.DrawLine(transform.position,
+            ClosestFuel().transform.position,
+            Color.yellow, 5f);
+        } else {
+            Debug.DrawLine(transform.position,
+            f.transform.position,
+            Color.green, 5f);
+        }
+
         if (f == null) return;
 
         // Attach flame to closest fuel
@@ -40,6 +52,9 @@ public class Flame : MonoBehaviour {
         f.localScale = Vector3.Lerp(f.localScale, vitalityVector, Time.deltaTime * 2);
 
         transform.rotation = Quaternion.identity;
+
+        // Hard removal
+        if (!invincible && life < -10) DieOut();
     }
 
     void Next() {
@@ -83,6 +98,7 @@ public class Flame : MonoBehaviour {
 
         var pos = transform.position + Helper.RandomPoint(maxFlameSpread);
         var go = GameObject.Instantiate(flamePrefab, pos, Quaternion.identity);
+        go.GetComponent<Flame>().life = lifeMax;
 
         // Orpahns are short lived flames with no fuel,
         // it is the default - but likely it will find purchase

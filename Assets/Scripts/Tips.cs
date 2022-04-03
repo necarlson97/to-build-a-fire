@@ -57,14 +57,13 @@ public class Tips : MonoBehaviour {
         // TODO for now, just run out of tips if they go by
 
         // Don't re-inform us if it was very recent
-        DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        double now = (double)(System.DateTime.UtcNow - epochStart).TotalSeconds;
-        if (timer.ContainsKey(topic) && now - timer[topic] < interval) return;
+        double nowSeconds = Helper.Now().TotalSeconds;
+        if (timer.ContainsKey(topic) && nowSeconds - timer[topic] < interval) return;
 
         List<string> list = d[topic];
         if (list.Count == 0) return;
         GetComponentInChildren<Text>().text = list.First();
         list.RemoveAt(0);
-        timer[topic] = now;
+        timer[topic] = nowSeconds;
     }
 }

@@ -18,8 +18,9 @@ public class Finger : MonoBehaviour {
     public string matName = "Skin Mat";
     Material mat; // Material specific to this object
 
+    float startOffset = 20f; //Gives players a bit to learn
     public void Start() {
-        InvokeRepeating("Next", Random.Range(0, 1f)+20f, 1f);
+        InvokeRepeating("Next", Random.Range(0, 1f)+startOffset, 1f);
         // Create a new unite material to tint
         mat = Instantiate(Resources.Load(matName) as Material);;
         var t = transform.parent.parent;
@@ -36,7 +37,8 @@ public class Finger : MonoBehaviour {
         if (status == "cold" && Warm()) status = "ok";
         if (status == "burned" && Frosty()) status = "ok";
 
-        if (Random.Range(0, 1f) < 0.05f) {
+        bool devKey = Input.GetKey("page up") || Input.GetKey("page down");
+        if (Random.Range(0, 1f) < 0.1f || devKey) {
             if (Burning() && status == "burned") status = "charred";
             if (Hot() && status == "ok") status = "burned";
             if (Warm() && status == "cold") {
@@ -94,19 +96,32 @@ public class Finger : MonoBehaviour {
 
 
     // If there are flames nearby, or too close
-    bool Warm() { return NearFlames(4f); }
-    bool Hot() { return NearFlames(2f); }
-    bool Burning() { return NearFlames(1f); }
+    bool Warm() {
+        if (Input.GetKey("page up")) return true; // Debug
+        return NearFlames(4f);
+    }
+    bool Hot() {
+        if (Input.GetKey("page up")) return true; // Debug
+        return NearFlames(2f);
+    }
+    bool Burning() {
+        if (Input.GetKey("page up")) return true; // Debug
+        return NearFlames(1f);
+    }
     // If we are holding onto something cold, and no fire around
     bool Frosty() {
         // Can get cold just from the wind
+        if (Input.GetKey("page down")) return true; // Debug
         if (Random.Range(0, 1f) < 0.1f) return true;
         var hand = FindObjectOfType<Grabber>();
         return hand.held?.GetComponent<Fuel>()?.frost > 0;
     }
-    bool Freezing() { return Frosty() & !NearFlames(6f); }
+    bool Freezing() {
+        if (Input.GetKey("page down")) return true; // Debug
+        return Frosty() & !NearFlames(6f);
+    }
 
-    bool Operable() {
+    public bool Operable() {
         // can the finger be used at all
         return status != "frostbitten" && status != "charred";
     }

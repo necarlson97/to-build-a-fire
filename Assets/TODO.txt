@@ -1,13 +1,8 @@
 Soon:
-death / end screen
-menu
+raise hand when holding stuff (?)
 matches
-working cassette
-impact sounds
-Snowflake particles
 
 Later:
-placeholder cassette and player, functional
 Push to github
 Banner immages / screenshots
 random skin color?
@@ -16,6 +11,13 @@ snow metaballs
 pushing down snow to free objects
 
 Done:
+impact sounds
+death / end screen
+Snowflake particles
+working cassette
+placeholder cassette and player, functional
+menu
+rotate hand anywhere, not just in middle
 blender sticks, logs, flares, etc
 flame placeholder
 picking up objects

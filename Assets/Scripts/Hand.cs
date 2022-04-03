@@ -9,7 +9,7 @@ public class Hand: MonoBehaviour {
    internal Vector3 startingPos;
 
    // Just a nice plane to move up/down from
-   private float startingY = 2f;
+   private float startingY = 3f;
 
    void Start() {
         targetPos = transform.position;
@@ -23,14 +23,17 @@ public class Hand: MonoBehaviour {
    void Update() {
         if (FindObjectOfType<Menu>().paused) return;
         SetTargetPosition();
+        
         // can, like a claw machine, move down to grab
         Lower(Input.GetMouseButton(0));
        
         // Are we moveing hand or rotating it
         if (Input.GetMouseButton(1)) Rotate();
         else Move();
-
+        
         SetFingers();
+
+        CheckDeath();
    }
 
     void SetTargetPosition() {
@@ -54,14 +57,16 @@ public class Hand: MonoBehaviour {
     void Rotate() {
         // Rotate hand based on relative mouse movement,
         // amnesia style
-        Cursor.lockState = CursorLockMode.Locked;
         var rotX = Input.GetAxis("Mouse X") * rotSpeed;
         var rotY = Input.GetAxis("Mouse Y") * rotSpeed;
         
         transform.RotateAround(transform.position, Vector3.up, rotX);
         transform.RotateAround(transform.position, Vector3.right, rotY);
 
-        // TODO limit rotation
+        // TODO because of security reasons, cursor is always reset to center
+        // Cursor.lockState = CursorLockMode.Locked;        
+        // TODO could make re-centering look more intentional
+        // targetPos = new Vector3(0f, 3f, 4.8f);
     }
 
     void Lower(bool lower) {
@@ -97,6 +102,20 @@ public class Hand: MonoBehaviour {
     void SetFinger(string name, bool closed) {
         // set a finger to be opened or closed
         transform.Find("Parts/"+name).GetComponentInChildren<Finger>().closed = closed;
+    }
+
+    void CheckDeath() {
+        // If all our fingers are inoperable, end the game
+        foreach (var f in GetComponentsInChildren<Finger>()) {
+            if (f.Operable()) return;
+        }
+        FindObjectOfType<SoundEffects>().Play("death");
+        Die();
+        // TODO could invoke, but then it keeps triggering during
+        // Invoke("Die", 2f);
+    }
+    void Die() {
+        FindObjectOfType<Menu>().Die();
     }
 
     

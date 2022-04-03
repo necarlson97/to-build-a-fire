@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 public class Fuel : MonoBehaviour {
     // TOOD have fuel that runs out,
@@ -36,7 +37,11 @@ public class Fuel : MonoBehaviour {
         SetColor();
     }
     void Next() {
-        if (frost > 0) frost -= NearbyFlames();
+        if (frost > 0 && NearbyFlames() > 0) {
+            // Defrost particles
+            GetComponentInChildren<ParticleSystem>().Play();    
+            frost -= NearbyFlames();
+        }
         SetColor();
     }
     void SetColor() {
@@ -46,17 +51,36 @@ public class Fuel : MonoBehaviour {
     }
     int NearbyFlames() {
         // Retuns the number of flames naerby
-        return Helper.FindNearby<Flame>(gameObject, 2.5f).Count;
+        return Helper.FindNearby<Flame>(gameObject, 5f).Count;
     }
     public bool HasFuel() {
         return fuel > 0 && frost <= 0;
     }
 
     private void OnCollisionEnter(Collision collision) {
-        // TODO play noise
+        // If this is a wooden fuel source, play stick clank
+        // when it hits something
+        var t = transform.Find("Wood Fuel");
+        if (t == null) return;
+        // Dont ear-smash on startup
+        if (Helper.JustStarted()) return;
+        var audio = t.GetComponent<AudioSource>();
+        var clips = t.GetComponent<WoodClips>().clips;
+        audio.pitch = 1 + Random.Range(-.1f, .1f);
+        audio.clip = clips.First();
+        clips.Add(clips.First());
+        clips.RemoveAt(0);
+        audio.Play();
     }
 
-    // void OnDrawGizmos()  {
-    //     Handles.Label(transform.position, "Flames: "+NearbyFlames());
-    // }
+    public static string FuelPrecent() {
+        // What % of all fuel sources were used
+        var used = 0;
+        var total = 0;
+        foreach (var f in Helper.FindAllScripts<Fuel>()) {
+            used += f.startingFuel - f.fuel;
+            total += f.startingFuel;
+        }
+        return Mathf.Round(((float)used / total) * 100) + "%";
+    }
 }
