@@ -5,7 +5,6 @@ using System.Collections;
 public class Hand: MonoBehaviour {
    internal float moveSpeed = 10;
    internal float rotSpeed = 4;
-   internal float fingerSpeed = 10;
    internal Vector3 targetPos;
    internal Vector3 startingPos;
 
@@ -36,7 +35,7 @@ public class Hand: MonoBehaviour {
         if (Input.GetMouseButton(1)) Rotate();
         else Move();
 
-        MoveFingers();
+        SetFingers();
    }
 
     void SetTargetPosition() {
@@ -73,7 +72,6 @@ public class Hand: MonoBehaviour {
     void Lower(bool lower) {
         // Move hand down, grabbing something or dropping it on the ground
 
-        
         var y = startingPos.y;
         // If hand is up, leave it at default height
 
@@ -94,38 +92,19 @@ public class Hand: MonoBehaviour {
         targetPos = new Vector3(targetPos.x, y, targetPos.z);
     }
 
-    void MoveFingers() {
-        // Open / close fingers
-        MoveFinger("thumb", Input.GetKey("space"));
-        MoveFinger("index", Input.GetKey("f"));
-        MoveFinger("middle", Input.GetKey("d"));
-        MoveFinger("ring", Input.GetKey("s"));
-        MoveFinger("pinkie", Input.GetKey("a"));
+    void SetFingers() {
+        // Open / close fingers using keyboard inputs
+        SetFinger("thumb", Input.GetKey("space"));
+        SetFinger("index", Input.GetKey("f"));
+        SetFinger("middle", Input.GetKey("d"));
+        SetFinger("ring", Input.GetKey("s"));
+        SetFinger("pinkie", Input.GetKey("a"));
     }
 
-    void MoveFinger(string name, bool closed) {
-        // Move an individual finger, by name
-
-        // TODO why is it reversed?
-        var t = transform.Find("Parts/"+name+"/Rig");
-        var to = closed ? t.Find("closed") : t.Find("open");
-
-        // TODO pink / black finggers from cold
-        LerpTransform(t.Find("target"), to);
-
-        // If the finger is closed, it can grab stuff
-        // note - we do not use enable/disable, because
-        // it does not fire 'OnTriggerExit' - so we
-        // use this location hack
-        // TODO likely not best place for it
-        if (closed) t.Find("closed").GetComponent<SphereCollider>().center = Vector3.zero;
-        else t.Find("closed").GetComponent<SphereCollider>().center = new Vector3(0, 1000, 0);
+    void SetFinger(string name, bool closed) {
+        // set a finger to be opened or closed
+        transform.Find("Parts/"+name).GetComponentInChildren<Finger>().closed = closed;
     }
 
-    void LerpTransform(Transform from, Transform to, float speedMod = 1) {
-        // Lerp a transform, using finger speed, with an optional speed modifier
-        var speed = fingerSpeed * Time.deltaTime * speedMod;
-        from.position = Vector3.Lerp(from.position, to.position, speed);
-        from.rotation = Quaternion.Lerp (from.rotation, to.rotation, speed);
-    }
+    
 }

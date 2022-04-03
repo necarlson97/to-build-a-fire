@@ -11,6 +11,8 @@ public class Tips : MonoBehaviour {
         {"grip", new List<string>() {
             "Oh, that's heavy.\nI'll have to grip it with more fingers...",
             "Arg, I have to get a better grip.",
+            "Barley holding on here, need to get a better grip.",
+            "Ah, only got a few fingers touching, gonna drop it...",
         }}, {"frost", new List<string>() {
             "Hm, it's frozen, I'll need to warm it first.",
             "Yeah, this is wet, I'll need to dry it.",

@@ -54,6 +54,12 @@ public class Helper : MonoBehaviour {
         return closest;
     }
 
+    public static void LerpTransform(Transform from, Transform to, float speed) {
+        // Lerp a transform, using finger speed, with an optional speed modifier
+        from.position = Vector3.Lerp(from.position, to.position, speed * Time.deltaTime);
+        from.rotation = Quaternion.Lerp (from.rotation, to.rotation, speed * Time.deltaTime);
+    }
+
     public static void Tip(string topic) {
         FindObjectOfType<Tips>().Tip(topic);
     }

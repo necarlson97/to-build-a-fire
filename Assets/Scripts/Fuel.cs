@@ -46,6 +46,10 @@ public class Fuel : MonoBehaviour {
         return fuel > 0 && frost <= 0;
     }
 
+    private void OnCollisionEnter(Collision collision) {
+        // TODO play noise
+    }
+
     void OnDrawGizmos()  {
         Handles.Label(transform.position, "Flames: "+NearbyFlames());
     }
