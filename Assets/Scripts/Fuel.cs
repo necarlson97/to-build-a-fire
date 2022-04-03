@@ -40,7 +40,7 @@ public class Fuel : MonoBehaviour {
         if (frost > 0 && NearbyFlames() > 0) {
             // Defrost particles
             GetComponentInChildren<ParticleSystem>().Play();    
-            frost -= NearbyFlames();
+            frost -= Mathf.Min(10, NearbyFlames());
         }
         SetColor();
     }

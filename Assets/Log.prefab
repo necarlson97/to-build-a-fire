@@ -167,10 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc516a1008bc0df4e852485a95212bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuel: 20000
+  fuel: 1000
   matName: Wood Mat
   frost: 0
-  clips: []
 --- !u!1001 &7822074738266480544
 PrefabInstance:
   m_ObjectHideFlags: 0

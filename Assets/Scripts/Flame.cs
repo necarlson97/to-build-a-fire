@@ -66,7 +66,7 @@ public class Flame : MonoBehaviour {
 
         // Flames with no fuel are very short lived
         if (MyFuel() == null) {
-            life -= 10;
+            life -= 50;
             return;
         } 
 

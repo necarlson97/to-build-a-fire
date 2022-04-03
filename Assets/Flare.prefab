@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc516a1008bc0df4e852485a95212bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuel: 100
+  fuel: 30
   matName: Wood Mat
   frost: 0
 --- !u!82 &4347062094756622535

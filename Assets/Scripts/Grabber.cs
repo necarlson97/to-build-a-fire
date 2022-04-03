@@ -109,12 +109,12 @@ public class Grabber : MonoBehaviour {
         // See if there are any tips we should share with the player
         // based on what we are holding
         if (held == null) return;
+        if (held.GetComponent<RoadFlare>()) Helper.Tip("flare");
+        if (held.GetComponent<Match>()) Helper.Tip("match");
         if (held.GetComponent<Fuel>()){
             if (held.GetComponent<Fuel>().frost > 0) Helper.Tip("frost");
             else Helper.Tip("fuel");
         }
-        if (held.GetComponent<RoadFlare>()) Helper.Tip("flare");
-        if (held.GetComponent<Match>()) Helper.Tip("match");
     }
 
     // void OnDrawGizmos()  {
