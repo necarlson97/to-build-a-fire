@@ -18,15 +18,15 @@ public class Grabber : MonoBehaviour {
 
     // If we have not enough fingers, grab only a bit
     int badGrab;
-    int maxGrab = 1000;
+    int maxGrab = 100;
 
     void Update() {
         CheckGrab();
     }
 
     void OnHold(GameObject go) {
-        // TODO doc
-        Debug.Log("Holding: "+go);
+        // When we hold, it moves with us,
+        // and has no gravity physics
         go.transform.parent = transform;
         go.GetComponent<Rigidbody>().isKinematic = true;
         CheckTips();
@@ -34,8 +34,7 @@ public class Grabber : MonoBehaviour {
     }
 
     void OnDrop(GameObject go) {
-        // TODO doc
-        Debug.Log("Dropping: "+go);
+        // When we drop, return it to normal physics
         go.transform.parent = transform.root;
         go.GetComponent<Rigidbody>().isKinematic = false;
         held = null;
@@ -64,14 +63,14 @@ public class Grabber : MonoBehaviour {
         // Grip is adequite if:
         // we have required # of fingers on it
         // OR we have only a few fingers, so we can hold for a short bit
+        if (!held || GoodGrab()) badGrab = Mathf.Min(badGrab+1, maxGrab);
+
         if (!held) return false;
         else if (GoodGrab()) return true;
         else if (BadGrab()) {
-            badGrab = badGrab > 0 ? badGrab-1 : badGrab; // Decrement to 0
+            badGrab = Mathf.Max(badGrab-1, 0); // Decrement to 0
+            if (badGrab < maxGrab/2) Helper.Tip("grip");
             return true;
-        } else if (badGrab < maxGrab) {
-            // If not touched at all, let our badGrab refull
-            badGrab++;
         }
         return false;
     }
@@ -81,7 +80,7 @@ public class Grabber : MonoBehaviour {
         // we must have required # of fingers on
         var g = held.GetComponent<Grabbable>();
         // (+1 because thumb doesn't count)
-        return holding["thumb"].Contains(g) && HeldFingers() > g.required+1;
+        return holding["thumb"].Contains(g) && HeldFingers() >= g.required+1;
     }
 
     private bool BadGrab() {
@@ -103,20 +102,20 @@ public class Grabber : MonoBehaviour {
     private void CheckTips() {
         // See if there are any tips we should share with the player
         // based on what we are holding
-        if (GetComponent<Fuel>()){
+        if (held?.GetComponent<Fuel>()){
             if (GetComponent<Fuel>().frost > 0) Helper.Tip("frost");
             else Helper.Tip("fuel");
         }
-        if (GetComponent<RoadFlare>()) Helper.Tip("flare");
-        if (BadGrab()) Helper.Tip("grip");
+        if (held?.GetComponent<RoadFlare>()) Helper.Tip("flare");
     }
 
     // void OnDrawGizmos()  {
     //     var s = ""; 
     //     if (held != null) s += "Held: "+held.name+" "+HeldFingers()+"\n";
-    //     foreach (var item in holding) {
-    //         s += item.Key+": "+item.Value.Count+"\n";
-    //     }
+    //     if (held != null) s += "Grip: "+badGrab+"/"+maxGrab+"\n";
+    //     // foreach (var item in holding) {
+    //     //     s += item.Key+": "+item.Value.Count+"\n";
+    //     // }
     //     Handles.Label(transform.position, s);
     // }
 }

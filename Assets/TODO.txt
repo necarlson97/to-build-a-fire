@@ -1,21 +1,19 @@
 Soon:
-
-
-
-Later:
-snow metaballs
-placeholder cassette and player, functional
-blender cassette and player
-pushing down snow to free objects
-wind force
-Push to github
-Banner immages / screenshots
-Sounds:
-	- wind
-	- snow crunch
-	- few flame noises dependent on # of flames
+death / end screen
+menu
+matches
+working cassette
+impact sounds
 Snowflake particles
 
+Later:
+placeholder cassette and player, functional
+Push to github
+Banner immages / screenshots
+random skin color?
+wind force
+snow metaballs
+pushing down snow to free objects
 
 Done:
 blender sticks, logs, flares, etc
@@ -27,6 +25,7 @@ flames spreading
 Hand mouse controls
 Blender fingers / hands
 Github init
+blender cassette and player
 
 
 Sounds:

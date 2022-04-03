@@ -8,8 +8,8 @@ public class Hand: MonoBehaviour {
    internal Vector3 targetPos;
    internal Vector3 startingPos;
 
-   // TODO move elsewhere
-   bool paused = false;
+   // Just a nice plane to move up/down from
+   private float startingY = 2f;
 
    void Start() {
         targetPos = transform.position;
@@ -21,12 +21,7 @@ public class Hand: MonoBehaviour {
    }
 
    void Update() {
-        if (Input.GetKey("escape")) paused = true;
-        if (paused) {
-            if (Input.GetMouseButton(0)) paused = false;
-            else return;
-        }
-
+        if (FindObjectOfType<Menu>().paused) return;
         SetTargetPosition();
         // can, like a claw machine, move down to grab
         Lower(Input.GetMouseButton(0));
@@ -42,18 +37,18 @@ public class Hand: MonoBehaviour {
         // Find the target position - 
         // a point on a plane above the ground,
         // where the users mouse 'is'
-        Plane plane = new Plane(Vector3.up, targetPos);
+        Plane plane = new Plane(Vector3.up, new Vector3(0, startingY, 0));
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         float point = 0f;
         if(plane.Raycast(ray, out point)) targetPos = ray.GetPoint(point);
+        Debug.DrawLine(transform.position, targetPos, Color.white);
     }
 
     void Move() {
         // Lerp hand pos to where the target position (Where the mouse is)
         Cursor.lockState = CursorLockMode.None;
         transform.position = Vector3.Lerp(transform.position, targetPos, moveSpeed * Time.deltaTime);
-        Debug.DrawLine(transform.position,targetPos,Color.red);
     }
 
     void Rotate() {
@@ -72,7 +67,7 @@ public class Hand: MonoBehaviour {
     void Lower(bool lower) {
         // Move hand down, grabbing something or dropping it on the ground
 
-        var y = startingPos.y;
+        var y = startingY;
         // If hand is up, leave it at default height
 
         // If it is down, cast ray, and put hand a bit above it
@@ -85,10 +80,8 @@ public class Hand: MonoBehaviour {
         // Want to fire the ray from higher up, in case we need to move above
         var pos = transform.position + Vector3.up;
         bool didHit = Physics.Raycast(pos, -Vector3.up, out hit, 10f, layerMask);
-        if (lower && didHit) {
-            Debug.DrawRay(transform.position, -Vector3.up * hit.distance, Color.yellow);
-            y = hit.point.y + .6f;
-        }
+
+        if (lower && didHit) y = hit.point.y + .6f;
         targetPos = new Vector3(targetPos.x, y, targetPos.z);
     }
 

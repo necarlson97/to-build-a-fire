@@ -18,9 +18,12 @@ public class Tips : MonoBehaviour {
             "Yeah, this is wet, I'll need to dry it.",
             "Oh man that's cold. Going to loose a finger.",
             "Ouch, this hurts just to hold",
-        }}, {"burn", new List<string>() {
+        }}, {"burned", new List<string>() {
             "Ow! I'm going to burn my hands!",
             "Wow, thats hot!",
+        }}, {"charred", new List<string>() {
+            "AHH! IT BURNS!",
+            "Too hot! Too hot!",
         }}, {"warm", new List<string>() {
             "Ohh, yeah, that feels nice and warm",
             "The warm air will keep my fingers moving.",
@@ -28,7 +31,7 @@ public class Tips : MonoBehaviour {
             "Ah, getting colder. If I don't keep my hands warm, they will freeze up.",
             "Need to keep my fingers warm, else they'll blacken...",
             "Losing circulation here...",
-        }}, {"frostbite", new List<string>() {
+        }}, {"frostbitten", new List<string>() {
             "Frostbite! That fingers gone...",
             "Oh no... The beginning of the end...",
         }}, {"flare", new List<string>() {

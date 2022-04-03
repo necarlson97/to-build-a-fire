@@ -14,7 +14,7 @@ public class Flame : MonoBehaviour {
     public GameObject flamePrefab;
 
     internal static int maxFlames = 100;
-    internal float maxFlameSpread = 1.3f; // How far flames will want to spread to
+    internal float maxFlameSpread = .5f; // How far flames will want to spread to
     
     void Start() {
         if (life == 0) life = lifeMax;
