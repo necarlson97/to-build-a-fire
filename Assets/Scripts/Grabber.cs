@@ -29,8 +29,8 @@ public class Grabber : MonoBehaviour {
         // and has no gravity physics
         go.transform.parent = transform;
         go.GetComponent<Rigidbody>().isKinematic = true;
-        CheckTips();
         held = go;
+        CheckTips();
     }
 
     void OnDrop(GameObject go) {
@@ -69,10 +69,16 @@ public class Grabber : MonoBehaviour {
         else if (GoodGrab()) return true;
         else if (BadGrab()) {
             badGrab = Mathf.Max(badGrab-1, 0); // Decrement to 0
-            if (badGrab < maxGrab/2) Helper.Tip("grip");
+            if (badGrab < maxGrab/2) GripTip();
             return true;
         }
         return false;
+    }
+    private void GripTip() {
+        // If we are not holding on well,
+        // let them know 
+        if (held.GetComponent<Grabbable>().required > 2) Helper.Tip("heavy");
+        else Helper.Tip("grip");
     }
 
     private bool GoodGrab() {
@@ -102,11 +108,13 @@ public class Grabber : MonoBehaviour {
     private void CheckTips() {
         // See if there are any tips we should share with the player
         // based on what we are holding
-        if (held?.GetComponent<Fuel>()){
-            if (GetComponent<Fuel>().frost > 0) Helper.Tip("frost");
+        if (held == null) return;
+        if (held.GetComponent<Fuel>()){
+            if (held.GetComponent<Fuel>().frost > 0) Helper.Tip("frost");
             else Helper.Tip("fuel");
         }
-        if (held?.GetComponent<RoadFlare>()) Helper.Tip("flare");
+        if (held.GetComponent<RoadFlare>()) Helper.Tip("flare");
+        if (held.GetComponent<Match>()) Helper.Tip("match");
     }
 
     // void OnDrawGizmos()  {

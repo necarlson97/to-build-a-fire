@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2835371834473982586}
   m_LocalRotation: {x: 0.1632212, y: -0, z: -0, w: 0.98658955}
   m_LocalPosition: {x: 0.02, y: -0.749, z: -0.216}
-  m_LocalScale: {x: 0.2, y: 0.53564, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.53564, z: 0.42752}
   m_Children: []
   m_Father: {fileID: 2835371834978446096}
   m_RootOrder: 1
@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 2835371834944055501}
   m_LocalRotation: {x: -0.03762075, y: -0, z: -0, w: 0.99929214}
   m_LocalPosition: {x: 0, y: 0, z: 0.058}
-  m_LocalScale: {x: 0.9, y: 1.6, z: 0.2}
+  m_LocalScale: {x: 0.765423, y: 1.4984001, z: 0.156726}
   m_Children: []
   m_Father: {fileID: 2835371834978446096}
   m_RootOrder: 0
@@ -171,7 +171,6 @@ MonoBehaviour:
   fuel: 300
   matName: Wood Mat
   frost: 0
-  clips: []
 --- !u!1 &2835371835532970799
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 2835371835532970799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.005, y: 1.127, z: 0.445}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.46420002, z: 0.41202003}
   m_Children: []
   m_Father: {fileID: 2835371834978446096}
   m_RootOrder: 2

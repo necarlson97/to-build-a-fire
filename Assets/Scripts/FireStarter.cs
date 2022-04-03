@@ -20,6 +20,7 @@ public abstract class FireStarter : MonoBehaviour {
         
         if (!lit || Dead()) return;
         if (lit) life --;
+        Visuals();
     }
 
     internal abstract void Visuals();
@@ -54,9 +55,5 @@ public abstract class FireStarter : MonoBehaviour {
 
     bool Dead() {
         return life < 0;
-    }
-
-    void OnDrawGizmos()  {
-        Handles.Label(transform.position, "Vel: "+Velocity());
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
 
@@ -10,6 +11,8 @@ public class Menu : MonoBehaviour {
     internal TimeSpan? startTime = null;
 
     List<Camera> cams = new List<Camera>();
+
+    float showVignette = 0;
 
     public void Start() {
         Pause();
@@ -23,6 +26,23 @@ public class Menu : MonoBehaviour {
         }
 
         if (Input.GetKey("0")) ToggleCamera();
+
+        // fade out the vignette
+        if (showVignette > 0) {
+            showVignette--;
+            var vign = GameObject.Find("Vignette").GetComponent<RawImage>();
+            var c = vign.color;
+            c.a = showVignette / 100;
+            vign.color = c;
+        }
+    }
+
+    public void ShowVignette(bool cold) {
+        // Show the vigette for a second as either hot or cold
+        var vign = GameObject.Find("Vignette").GetComponent<RawImage>();
+        if (cold) vign.color = Color.white;
+        else vign.color = Color.red;
+        showVignette = 100f;
     }
 
     public void ToggleCamera() {
@@ -81,6 +101,14 @@ public class Menu : MonoBehaviour {
         transform.Find("Canvas/Description").GetComponent<Text>().text = t;
 
         transform.Find("Canvas/Help").gameObject.SetActive(false);
+        transform.Find("Canvas/Play Btn").gameObject.SetActive(false);
+        transform.Find("Canvas/Replay Btn").gameObject.SetActive(true);
         Pause();
+    }
+
+    public void Replay() {
+        // Player has died - reload everything
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }

@@ -39,15 +39,27 @@ public class Finger : MonoBehaviour {
 
         bool devKey = Input.GetKey("page up") || Input.GetKey("page down");
         if (Random.Range(0, 1f) < 0.1f || devKey) {
-            if (Burning() && status == "burned") status = "charred";
-            if (Hot() && status == "ok") status = "burned";
+            if (Burning() && status == "burned") {
+                FindObjectOfType<Menu>().ShowVignette(false);
+                status = "charred";
+            }
+            if (Hot() && status == "ok") {
+                FindObjectOfType<Menu>().ShowVignette(false);
+                status = "burned";
+            }
             if (Warm() && status == "cold") {
                 status = "ok";
                 Helper.Tip("warm");
             }
             
-            if (Freezing() && status == "cold") status = "frostbitten";
-            if (Frosty() && status == "ok") status = "cold";
+            if (Freezing() && status == "cold") {
+                FindObjectOfType<Menu>().ShowVignette(true);
+                status = "frostbitten";
+            }
+            if (Frosty() && status == "ok") {
+                FindObjectOfType<Menu>().ShowVignette(true);
+                status = "cold";
+            }
 
             if (status != "ok") Helper.Tip(status);
         }
@@ -70,6 +82,10 @@ public class Finger : MonoBehaviour {
     public void Update() {
         // Move finger to ik target
         MoveFinger();
+
+        // Dev testing death and whatnot
+        bool devKey = Input.GetKey("page up") || Input.GetKey("page down");
+        if (devKey) Next();
     }
 
     void MoveFinger() {

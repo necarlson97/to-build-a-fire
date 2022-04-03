@@ -140,10 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc516a1008bc0df4e852485a95212bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuel: 30
+  fuel: 100
   matName: Wood Mat
   frost: 0
-  clips: []
 --- !u!82 &4347062094756622535
 AudioSource:
   m_ObjectHideFlags: 0
@@ -370,7 +369,7 @@ GameObject:
   - component: {fileID: 7068198879640680080}
   - component: {fileID: 7263475271999297129}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Red Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,16 +1,21 @@
 Soon:
+pain sounds
 raise hand when holding stuff (?)
-matches
+
 
 Later:
-Push to github
-Banner immages / screenshots
-random skin color?
-wind force
-snow metaballs
-pushing down snow to free objects
+Check all tips work!
+matches
+Banner images / screenshots
+push final to github
+upload final to itch.io
+publish final to jam
+if holding cassette, player eats it
 
 Done:
+reload scene on replay!
+Push to github
+vignette of cold / hot
 impact sounds
 death / end screen
 Snowflake particles
@@ -29,6 +34,12 @@ Blender fingers / hands
 Github init
 blender cassette and player
 
+Likely never:
+would be nice if it saved cassette progress
+random skin color?
+wind force
+snow metaballs
+pushing down snow to free objects
 
 Sounds:
 	- snow crunch

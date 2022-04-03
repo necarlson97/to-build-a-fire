@@ -5,6 +5,6 @@ using UnityEditor;
 
 public class RoadFlare : FireStarter {
     internal override void Visuals() {
-        GetComponentInChildren<Light>().intensity = (life/100) * 10;
+        transform.Find("Red Light").GetComponent<Light>().intensity = (life/100) * 10;
     }
 }
