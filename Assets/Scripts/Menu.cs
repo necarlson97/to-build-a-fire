@@ -95,7 +95,7 @@ public class Menu : MonoBehaviour {
         
         var t = String.Format("You died. That's ok, we all will.\n"
             +"You survived {0}.\n"
-            +"You burdned {1} of the fuel.\n"
+            +"You burned {1} of the fuel.\n"
             +"You listened to {2} of the cassette.",
             survived, fuel, cassette);
         transform.Find("Canvas/Description").GetComponent<Text>().text = t;

@@ -78,7 +78,7 @@ public class Fuel : MonoBehaviour {
         var used = 0;
         var total = 0;
         foreach (var f in Helper.FindAllScripts<Fuel>()) {
-            used += f.startingFuel - f.fuel;
+            used += f.startingFuel - Mathf.Max(f.fuel, 0);
             total += f.startingFuel;
         }
         return Mathf.Round(((float)used / total) * 100) + "%";

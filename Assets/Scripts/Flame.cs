@@ -8,7 +8,6 @@ public class Flame : MonoBehaviour {
     // How long will this flame last, spreading new fires
     internal float lifeMax = 100;
     public float life;
-    public bool invincible = false;
 
     // An individual flame that gets spawned by this fire source
     public GameObject flamePrefab;
@@ -53,8 +52,8 @@ public class Flame : MonoBehaviour {
 
         transform.rotation = Quaternion.identity;
 
-        // Hard removal
-        if (!invincible && life < -10) DieOut();
+        // Remove, but give a bit of time for particles to flame out
+        if (life < -2) DieOut();
     }
 
     void Next() {
@@ -74,8 +73,6 @@ public class Flame : MonoBehaviour {
         MyFuel().fuel--;
         // Sometimes, depending on this flames health, it will spread
         if (Random.Range(0, 1f) < 0.3f) SpawnFlame();
-        // Once flame is out, remove it
-        if (!invincible && life < 0) Invoke("DieOut", 2f);
     }
 
     void DieOut() {
