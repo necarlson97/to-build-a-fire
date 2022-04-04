@@ -1,4 +1,4 @@
-# to-build-a-fire
+# To Build A Fire (Web Game)
 A unity game made in 48hrs for ludum dare #50 - A bit of 'Surgeon Simulator', a dash of 'Little Inferno', a smidge of 'The Long Dark'.  
 Inspired by the 1902 short story by Jack London.
 
